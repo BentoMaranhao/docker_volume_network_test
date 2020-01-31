@@ -1,0 +1,14 @@
+FROM alpine:latest
+
+RUN apk update && apk upgrade
+
+RUN mkdir /sub
+COPY ./crontab2.bak /sub/
+COPY ./short.py /sub/
+WORKDIR /sub
+
+RUN crontab crontab2.bak
+
+RUN apk add python3
+
+ENTRYPOINT ["/bin/ash"]
